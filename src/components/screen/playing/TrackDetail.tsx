@@ -45,14 +45,13 @@ export const TrackDetail = ({
                 },
               },
             }}
-            className='relative mx-auto flex h-96 w-96 items-center justify-center'
+            className='relative'
           >
             <BlurImage
               src={track.cover}
-              layout='fill'
+              layout='fixed'
               height={240}
               width={240}
-              objectFit='cover'
               className='h-full w-full rounded shadow-lg'
               alt={`${track.name}-cover-image`}
             />

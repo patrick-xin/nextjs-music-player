@@ -6,7 +6,7 @@ import { siteInfo } from '@/lib/site.info';
 
 const AboutPage = () => {
   return (
-    <div className='relative mx-auto mb-28 h-full min-h-screen w-full max-w-2xl px-8 text-purple-200/20 lg:text-lg'>
+    <div className='relative mx-auto mb-40 h-full min-h-screen w-full max-w-2xl px-8 text-purple-200/20 lg:text-lg'>
       <Link href='/'>
         <a className='my-8 inline-flex items-center gap-2 text-white/50'>
           <span>
