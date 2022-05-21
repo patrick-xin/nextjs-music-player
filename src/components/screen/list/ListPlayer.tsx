@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import { PlayPauseButton } from '@/components/common';
+import { AnimatedGradient } from '@/components/screen/list/ListTable';
 
 import { useSongStore } from '@/store/song';
 
@@ -9,7 +10,8 @@ export const ListPlayer = () => {
   const { currentSong, toggleScreen } = useSongStore();
 
   return (
-    <div className='fixed bottom-0 right-0 left-0 z-50 mx-auto max-w-xl gap-4 rounded-md bg-primary-dark'>
+    <div className='mesh fixed bottom-0 right-0 left-0 z-50 mx-auto max-w-full gap-4 rounded-md lg:px-12'>
+      <AnimatedGradient />
       {currentSong ? (
         <div className='flex items-center justify-between p-4'>
           <div

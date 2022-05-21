@@ -2,7 +2,7 @@ import create from 'zustand';
 
 import { lists } from '@/data';
 
-import { Track } from '@/types';
+import { List, Track } from '@/types';
 
 enum HOWLER_STATE {
   UNLOADED = 'unloaded',
@@ -12,7 +12,7 @@ enum HOWLER_STATE {
 
 type PlayerState = {
   currentSong: Track | null;
-  currentList: Track[];
+  currentList: List;
   currentScreen: 'main' | 'playing';
   volume: number[];
   isPlayListShown: boolean;
@@ -30,14 +30,14 @@ type PlayerState = {
   toggleList: () => void;
   toggleScreen: (screen: 'main' | 'playing') => void;
   setCurrentSong: (song: Track) => void;
-  setCurrentList: (songs: Track[]) => void;
-  playNextSong: (songs: Track[]) => void;
-  playPrevSong: (songs: Track[]) => void;
+  setCurrentList: (list: List) => void;
+  playNextSong: (list: List) => void;
+  playPrevSong: (list: List) => void;
 };
 
 export const useSongStore = create<PlayerState>((set) => ({
   currentSong: null,
-  currentList: lists[0].tracks,
+  currentList: lists[0],
   isPlaying: false,
   isRepeating: false,
   isMute: false,
@@ -57,39 +57,45 @@ export const useSongStore = create<PlayerState>((set) => ({
       currentScreen: screen,
     })),
   setCurrentSong: (song) => set(() => ({ currentSong: song, isPlaying: true })),
-  setCurrentList: (songs) => set(() => ({ currentList: songs })),
+  setCurrentList: (list) => set(() => ({ currentList: list })),
   toggleList: () =>
     set((state) => ({ isPlayListShown: !state.isPlayListShown })),
-  playNextSong: (songs) => {
+  playNextSong: (list) => {
     set((state) => {
-      const index = songs.findIndex(
+      const index = list.tracks.findIndex(
         (song) => song.id === state.currentSong?.id
       );
+
       const isShuffle = state.isShuffle;
       if (isShuffle) {
-        const nextIndex = Math.floor(Math.random() * songs.length);
+        const nextIndex = Math.floor(Math.random() * list.tracks.length);
 
         if (nextIndex === index) {
-          state.playNextSong(songs);
+          state.playNextSong(list);
         }
         return {
-          currentSong: songs[nextIndex],
+          currentSong: list.tracks[nextIndex],
           isPlaying: true,
         };
       }
       return {
-        currentSong: index === songs.length - 1 ? songs[0] : songs[index + 1],
+        currentSong:
+          index !== list.tracks.length - 1
+            ? list.tracks[index + 1]
+            : list.tracks[0],
         isPlaying: true,
       };
     });
   },
-  playPrevSong: (songs) => {
+  playPrevSong: (list) => {
     set((state) => {
-      const index = songs.findIndex(
+      const index = list.tracks.findIndex(
         (song) => song.id === state.currentSong?.id
       );
       return {
-        currentSong: index ? songs[index - 1] : songs[songs.length - 1],
+        currentSong: index
+          ? list.tracks[index - 1]
+          : list.tracks[list.tracks.length - 1],
         isPlaying: true,
       };
     });

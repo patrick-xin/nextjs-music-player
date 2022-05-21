@@ -1,58 +1,42 @@
-import { motion } from 'framer-motion';
-import React from 'react';
+import Link from 'next/link';
+import React, { useState } from 'react';
+
+import { siteInfo } from '@/lib/site.info';
 
 import { lists } from '@/data';
 
-import { BlurImage } from '@/components/common';
 import { ListTable } from '@/components/screen/list';
+import { ListCard } from '@/components/screen/list/ListCard';
 
 import { useSongStore } from '@/store/song';
 
-import { List } from '@/types';
+export const ListScreen = () => {
+  const { currentList } = useSongStore();
+  const initial = lists.indexOf(currentList);
 
-const ListScreen = () => {
+  const [selected, setSelected] = useState(initial ?? 0);
   return (
     <div className='relative h-full min-h-screen w-full pb-48'>
-      <h1 className='mb-2 mt-6 text-center text-2xl italic'>
-        Patrick&apos;s Music Station
+      <h1 className='mb-2 mt-6 text-center text-2xl italic text-purple-200/50 md:my-8 lg:text-4xl'>
+        {siteInfo.title}
       </h1>
+      <h3 className='text-center underline underline-offset-2'>
+        <Link href='/about'>
+          <a className='text-purple-200/40'>About</a>
+        </Link>
+      </h3>
       <div className='my-8 inline-flex w-full snap-x gap-6 overflow-x-scroll px-8'>
-        {lists.map((list) => (
-          <ListCard key={list.category} list={list} />
+        {lists.map((list, index) => (
+          <ListCard
+            key={list.category}
+            list={list}
+            index={index}
+            setSelected={setSelected}
+            selected={selected}
+          />
         ))}
       </div>
-      <ListTable />
-    </div>
-  );
-};
-
-export default ListScreen;
-
-const ListCard = ({ list }: { list: List }) => {
-  const { setCurrentList } = useSongStore();
-
-  return (
-    <div
-      onClick={() => setCurrentList(list.tracks)}
-      className='flex cursor-pointer snap-center flex-col items-center justify-center'
-    >
-      <motion.div whileTap={{ scale: 1.05 }} className='relative'>
-        <BlurImage
-          src={list.cover}
-          alt='cover-image'
-          layout='fixed'
-          height={160}
-          width={160}
-          className='rounded shadow-md'
-        />
-      </motion.div>
-
-      <h3 className='text-lg'>
-        <span>{list.category}</span>
-        <span className='px-1 text-sm text-white/70'>
-          ({list.tracks.length})
-        </span>
-      </h3>
+      <ListTable list={lists[selected]} />
     </div>
   );
 };

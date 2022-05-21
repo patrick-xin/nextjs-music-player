@@ -8,9 +8,52 @@
   }
 }
 
-.mesh {
-  background-color: #322840;
-  background-image: radial-gradient(at 21% 33%, #211a37 0px, transparent 50%),
-    radial-gradient(at 79% 32%, #252844 0px, transparent 50%),
-    radial-gradient(at 26% 83%, #1c2e54 0px, transparent 50%);
+@layer utilities {
+  .mesh {
+    background-color: #322840;
+    background-image: radial-gradient(at 21% 33%, #211a37 0px, transparent 50%),
+      radial-gradient(at 79% 32%, #252844 0px, transparent 50%),
+      radial-gradient(at 26% 83%, #1c2e54 0px, transparent 50%);
+  }
+  .bar {
+    @apply absolute bottom-[1px] h-[3px] w-[3px] bg-green-500;
+
+    animation: sound 0ms -800ms linear infinite alternate;
+  }
+  @keyframes sound {
+    0% {
+      opacity: 0.35;
+      height: 3px;
+    }
+
+    100% {
+      opacity: 1;
+      height: 16px;
+    }
+  }
+
+  .bar:nth-child(1) {
+    left: 1px;
+    animation-duration: 474ms;
+  }
+
+  .bar:nth-child(2) {
+    left: 5px;
+    animation-duration: 433ms;
+  }
+
+  .bar:nth-child(3) {
+    left: 9px;
+    animation-duration: 407ms;
+  }
+
+  .bar:nth-child(4) {
+    left: 13px;
+    animation-duration: 458ms;
+  }
+
+  .bar:nth-child(5) {
+    left: 17px;
+    animation-duration: 400ms;
+  }
 }

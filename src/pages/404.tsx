@@ -2,8 +2,8 @@ import Link from 'next/link';
 import * as React from 'react';
 import { RiAlarmWarningFill } from 'react-icons/ri';
 
-import Seo from '@/components/common/Seo';
-import Layout from '@/components/layout/Layout';
+import { Seo } from '@/components/common/Seo';
+import { Layout } from '@/components/layout/Layout';
 
 export default function NotFoundPage() {
   return (

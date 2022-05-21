@@ -2,18 +2,15 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { openGraph } from '@/lib/helper';
+import { siteInfo } from '@/lib/site.info';
 
-// !STARTERCONF Change these default meta
 const defaultMeta = {
-  title: 'Next.js Music Player',
-  siteName: 'Next.js Music Player',
-  description:
-    'Mobile version music player built with Next.js, Tailwind CSS, and React Holwer.',
-  /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  url: 'https://tsnext-tw.thcl.dev',
+  title: siteInfo.title,
+  siteName: siteInfo.title,
+  description: 'Music player built with Next.js, Tailwind CSS.',
+  url: 'https://nextjs-music-player-delta.vercel.app',
   type: 'website',
   robots: 'follow, index',
-  /** No need to be filled, will be populated with openGraph function */
   image: '',
 };
 
@@ -22,7 +19,7 @@ type SeoProps = {
   templateTitle?: string;
 } & Partial<typeof defaultMeta>;
 
-export default function Seo(props: SeoProps) {
+export function Seo(props: SeoProps) {
   const router = useRouter();
   const meta = {
     ...defaultMeta,
@@ -96,7 +93,6 @@ type Favicons = {
   type?: string;
 };
 
-// !STARTERCONF this is the default favicon, you can generate your own from https://www.favicon-generator.org/ then replace the whole /public/favicon folder
 const favicons: Array<Favicons> = [
   {
     rel: 'apple-touch-icon',

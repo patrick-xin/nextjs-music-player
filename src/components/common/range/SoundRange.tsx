@@ -5,7 +5,7 @@ import { RangeTrack } from '@/components/common/range/RangeTrack';
 
 import { useSongStore } from '@/store/song';
 
-const SoundRange = () => {
+export const SoundRange = () => {
   const { handleVolumeRange, volume } = useSongStore();
   return (
     <Range
@@ -33,5 +33,3 @@ const SoundRange = () => {
     />
   );
 };
-
-export default SoundRange;

@@ -8,7 +8,7 @@ type TrackRangeProps = {
   onChange: (values: number[]) => void;
 };
 
-const TrackRange = ({ duration, values, onChange }: TrackRangeProps) => {
+export const TrackRange = ({ duration, values, onChange }: TrackRangeProps) => {
   return (
     <Range
       key='player-range'
@@ -35,5 +35,3 @@ const TrackRange = ({ duration, values, onChange }: TrackRangeProps) => {
     />
   );
 };
-
-export default TrackRange;
