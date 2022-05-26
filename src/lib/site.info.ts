@@ -5,8 +5,7 @@ export const siteInfo = {
     site: 'https://patrickxin.com',
   },
   info: [
-    'As a music lover, I always want to build a small station that belongs to myself. This is a side project that I built to make mysmall dream come true as well as practing my frontend skills.',
-    'The tech I used includes Next.js, Zustand, React Howler. If you&apos;re browsering this on mobile, you can swipe each song(left is previous and right is next).',
+    'Swiping to play the next song and the previous song is available on mobile.',
     'Enjoy a selection of music',
   ],
   disclaimer: {

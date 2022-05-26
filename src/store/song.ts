@@ -29,7 +29,7 @@ type PlayerState = {
   toggleShuffle: () => void;
   toggleList: () => void;
   toggleScreen: (screen: 'main' | 'playing') => void;
-  setCurrentSong: (song: Track) => void;
+  setCurrentSong: (song: Track, isPlaying: boolean) => void;
   setCurrentList: (list: List) => void;
   playNextSong: (list: List) => void;
   playPrevSong: (list: List) => void;
@@ -56,7 +56,8 @@ export const useSongStore = create<PlayerState>((set) => ({
     set(() => ({
       currentScreen: screen,
     })),
-  setCurrentSong: (song) => set(() => ({ currentSong: song, isPlaying: true })),
+  setCurrentSong: (song, isPlaying) =>
+    set(() => ({ currentSong: song, isPlaying })),
   setCurrentList: (list) => set(() => ({ currentList: list })),
   toggleList: () =>
     set((state) => ({ isPlayListShown: !state.isPlayListShown })),

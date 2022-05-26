@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { siteInfo } from '@/lib/site.info';
 
@@ -12,9 +12,13 @@ import { useSongStore } from '@/store/song';
 
 export const ListScreen = () => {
   const { currentList } = useSongStore();
-  const initial = lists.indexOf(currentList);
 
-  const [selected, setSelected] = useState(initial ?? 0);
+  const [selected, setSelected] = useState<number>(0);
+  useEffect(() => {
+    if (currentList) {
+      setSelected(currentList.id);
+    }
+  }, [currentList]);
   return (
     <div className='relative h-full min-h-screen w-full pb-48'>
       <h1 className='mb-2 mt-6 text-center text-2xl italic text-purple-200/50 md:my-8 lg:text-4xl'>

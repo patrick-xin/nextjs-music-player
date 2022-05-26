@@ -9,7 +9,7 @@ export type Track = {
 };
 
 export type List = {
-  id: string;
+  id: number;
   category: string;
   tracks: Track[];
   cover: string;

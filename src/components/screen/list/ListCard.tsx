@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import React from 'react';
+import { AiFillSound } from 'react-icons/ai';
 
 import { BlurImage } from '@/components/common';
 
@@ -18,16 +19,19 @@ export const ListCard = ({
   index: number;
   selected: number;
 }) => {
-  const { currentList, isPlaying } = useSongStore();
+  const { currentList } = useSongStore();
 
   return (
     <div
       onClick={() => {
         setSelected(index);
       }}
-      className='flex cursor-pointer snap-center flex-col items-center justify-center text-purple-200/30'
+      className='flex  snap-center flex-col items-center justify-center text-purple-200/30'
     >
-      <motion.div whileTap={{ scale: 1.05 }} className='relative'>
+      <motion.div
+        whileTap={{ scale: 1.05 }}
+        className='relative cursor-pointer'
+      >
         <BlurImage
           src={list.cover}
           alt='cover-image'
@@ -37,22 +41,19 @@ export const ListCard = ({
           className='rounded shadow-md'
         />
       </motion.div>
-
-      <h3 className='inline-flex items-center text-lg'>
-        <span className={`${index === selected ? 'text-white/70' : ''}`}>
-          {list.category}
-        </span>
-        <span className='px-1 text-sm text-purple-200/30'>
-          ({list.tracks.length})
-        </span>
-        {currentList?.id === list.id && isPlaying && (
-          <span className='relative mx-2 h-4 w-4'>
-            {Array.from(Array(4).keys()).map((item, index) => (
-              <span className='bar' key={index} />
-            ))}
+      <div className='flex items-center'>
+        <h3 className='inline-flex items-center text-lg'>
+          <span className={`${index === selected ? 'text-white/70' : ''}`}>
+            {list.category}
           </span>
+          <span className='px-1 text-sm text-purple-200/30'>
+            ({list.tracks.length})
+          </span>
+        </h3>
+        {currentList?.id === list.id && (
+          <AiFillSound className='ml-2 text-green-500/70' />
         )}
-      </h3>
+      </div>
     </div>
   );
 };

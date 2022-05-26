@@ -16,7 +16,7 @@ export const ListTable = ({ list }: { list: List }) => {
       <table className='h-full w-full table-auto'>
         <TableHead />
         <tbody className='w-full'>
-          {list.tracks.map((track, index) => (
+          {list?.tracks.map((track, index) => (
             <TableRow key={track.id} track={track} index={index} list={list} />
           ))}
         </tbody>
@@ -152,8 +152,9 @@ const TrackTableCell = ({
       <button
         className='rounded-full bg-primary-light/50 p-2'
         onClick={() => {
-          setCurrentSong(track);
+          setCurrentSong(track, true);
           setCurrentList(list);
+          localStorage.setItem('current-song', JSON.stringify(track));
         }}
       >
         <MdPlayArrow className='h-4 w-4 text-white' />
