@@ -1,0 +1,11 @@
+overwrite: true
+schema: process.env.GRAPHCMS_ENV
+documents:
+  - 'src/**/*.{graphql,tsx,ts}'
+  - '!src/generated/graphql.tsx'
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'

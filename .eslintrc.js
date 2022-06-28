@@ -13,8 +13,15 @@ module.exports = {
     'prettier',
   ],
   rules: {
-    'no-unused-vars': 'off',
-    'no-console': 'warn',
+    'no-unused-vars': [
+      'off', // or error
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+      },
+    ],
+    'no-console': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     'react/display-name': 'off',
@@ -24,8 +31,16 @@ module.exports = {
     ],
 
     //#region  //*=========== Unused Import ===========
-    '@typescript-eslint/no-unused-vars': 'off',
-    'unused-imports/no-unused-imports': 'warn',
+    '@typescript-eslint/no-unused-vars': [
+      'warn', // or error
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+      },
+    ],
+    '@typescript-eslint/no-explicit-any': 'off',
+    'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': [
       'warn',
       {

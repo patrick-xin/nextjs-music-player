@@ -1,8 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
 
-import { BlurImage } from '@/components/common';
-
-import { Track } from '@/types';
+import { Track } from '@/generated/graphql';
 
 export const TrackDetail = ({
   track,
@@ -47,8 +46,8 @@ export const TrackDetail = ({
             }}
             className='relative'
           >
-            <BlurImage
-              src={track.cover}
+            <Image
+              src={track.coverImage.source.url}
               layout='fixed'
               height={240}
               width={240}
@@ -59,7 +58,7 @@ export const TrackDetail = ({
 
           <div className='flex flex-col items-center justify-center gap-2'>
             <h4 className='text-2xl'>{track.name}</h4>
-            <h3 className='text-gray-400'>{track.artist}</h3>
+            <h3 className='text-gray-400'>artist</h3>
           </div>
         </motion.div>
       )}

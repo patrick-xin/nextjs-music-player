@@ -12,15 +12,11 @@
 - Custom hooks `useHolwer`, `useAnimationFrame`
 - TypeScript
 
-
 Starter template using [**ts-nextjs-tailwind-starter**](https://github.com/theodorusclarence/ts-nextjs-tailwind-starter).
-
-
 
 ## Getting Started
 
 ### 1. Clone the repo:
-
 
 ### 2. Install dependencies
 
@@ -39,5 +35,3 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. You can start editing the page by modifying `src/pages/index.tsx`.
-
-

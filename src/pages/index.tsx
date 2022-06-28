@@ -1,31 +1,34 @@
-import { GetStaticProps } from 'next';
+import { gql } from '@apollo/client';
 import * as React from 'react';
 
-import { lists } from '@/data';
+import { client } from '@/lib/client';
 
+import AboutModal from '@/components/common/AboutModal';
 import { Seo } from '@/components/common/Seo';
-import { ListScreen } from '@/components/screen/list/ListScreen';
-import { PlayingScreen } from '@/components/screen/playing/PlayingScreen';
+import { ListScreen } from '@/components/screen/list';
+import { PlayingScreen } from '@/components/screen/playing';
 
 import { useSongStore } from '@/store/song';
 
-import { List, Track } from '@/types';
+import { List, Page, Track } from '@/generated/graphql';
 
-export default function HomePage({ lists }: { lists: List[] }) {
+type Props = {
+  lists: List[];
+  page: Page;
+};
+export default function HomePage({ lists, page }: Props) {
   const { currentScreen, setCurrentSong, setCurrentList } = useSongStore();
+  const [isModalOpen, setModalOpen] = React.useState(false);
   React.useEffect(() => {
-    const song = localStorage && localStorage.getItem('current-song');
-    if (song) {
-      const lastplayed = JSON.parse(song) as Track;
+    const lastPlayedSong = localStorage && localStorage.getItem('current-song');
+
+    if (lastPlayedSong) {
+      const lastplayed = JSON.parse(lastPlayedSong) as Track;
       setCurrentSong(lastplayed, false);
-
-      const tracks = lists.reduce<string[]>((cur, next) => {
-        return [...cur, next.category];
-      }, []);
-
-      const index = tracks.findIndex((t) => t === lastplayed.genre);
-
-      setCurrentList(lists[index]);
+      const list = lists.find(
+        (list) => list.category === lastplayed.genre
+      ) as List;
+      setCurrentList(list);
     } else {
       setCurrentList(lists[0]);
     }
@@ -34,15 +37,60 @@ export default function HomePage({ lists }: { lists: List[] }) {
   return (
     <>
       <Seo />
-      {currentScreen === 'playing' ? <PlayingScreen /> : <ListScreen />}
+
+      {currentScreen === 'playing' ? (
+        <PlayingScreen />
+      ) : (
+        <ListScreen lists={lists} toggleModal={() => setModalOpen((s) => !s)} />
+      )}
+
+      <AboutModal
+        content={page}
+        isModalOpen={isModalOpen}
+        closeModal={() => setModalOpen(false)}
+      />
     </>
   );
 }
 
-export const getStaticProps: GetStaticProps = () => {
+export async function getStaticProps() {
+  const { data } = await client.query({
+    query: gql`
+      query HomePageQuery {
+        lists(orderBy: publishedAt_DESC) {
+          id
+          image {
+            source {
+              url
+            }
+          }
+          category
+          tracks(orderBy: name_ASC) {
+            id
+            name
+            duration
+            genre
+            src
+            coverImage {
+              source {
+                url
+              }
+            }
+          }
+        }
+        page(where: { slug: "about" }) {
+          content {
+            raw
+          }
+        }
+      }
+    `,
+  });
+
   return {
     props: {
-      lists,
+      lists: data.lists as List[],
+      page: data.page as Page,
     },
   };
-};
+}

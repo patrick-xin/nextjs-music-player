@@ -1,25 +1,23 @@
-import { animate, motion, useMotionValue, useTransform } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MdPause, MdPlayArrow } from 'react-icons/md';
 
-import { BlurImage } from '@/components/common/BlurImage';
+import { BlurImage } from '@/components/common';
 
-import { useSongStore } from '@/store/song';
+import { HOWLER_STATE, useSongStore } from '@/store/song';
 
-import { formatTime } from '@/utils';
+import { List, Track } from '@/generated/graphql';
+import { formatTime, setTrackToLocalStorage } from '@/utils';
 
-import { List, Track } from '@/types';
+type Props = {
+  list: List;
+};
 
-export const ListTable = ({ list }: { list: List }) => {
+export const ListTable = ({ list }: Props) => {
   return (
     <div className='flex h-auto flex-col overflow-y-auto text-gray-400'>
       <table className='h-full w-full table-auto'>
         <TableHead />
-        <tbody className='w-full'>
-          {list?.tracks.map((track, index) => (
-            <TableRow key={track.id} track={track} index={index} list={list} />
-          ))}
-        </tbody>
+        <TableBody list={list} />
       </table>
     </div>
   );
@@ -52,12 +50,22 @@ const TableHead = () => {
   );
 };
 
+const TableBody = ({ list }: { list: List }) => {
+  return (
+    <tbody className='w-full'>
+      {list.tracks?.map((track, index) => (
+        <TableRow key={track.id} track={track} index={index} list={list} />
+      ))}
+    </tbody>
+  );
+};
+
 type TableRowProps = { track: Track; index: number; list: List };
 
 const TableRow = ({ track, index, list }: TableRowProps) => {
-  const { name, cover, artist, duration, genre } = track;
+  const { name, coverImage, duration, genre } = track;
   const [isHovering, setHovering] = useState<null | number>(null);
-  const { isPlaying, currentSong } = useSongStore();
+  const { isPlaying, currentSong, isLoaded } = useSongStore();
 
   return (
     <tr
@@ -76,7 +84,7 @@ const TableRow = ({ track, index, list }: TableRowProps) => {
         <div className='flex items-center gap-5'>
           <div className='relative'>
             <BlurImage
-              src={cover}
+              src={coverImage.source.url}
               layout='fixed'
               width={60}
               height={60}
@@ -100,11 +108,13 @@ const TableRow = ({ track, index, list }: TableRowProps) => {
           <div className='flex items-center'>
             <div className='space-y-1'>
               <div className='text-white'>{name}</div>
-              <div className='text-xs'>{artist}</div>
+              <div className='text-xs'>artist</div>
             </div>
+
             <div className='relative ml-4 h-4 w-4'>
               {isPlaying &&
-                currentSong?.id === track.id &&
+                (isLoaded === HOWLER_STATE.LOADED && currentSong?.id) ===
+                  track.id &&
                 Array.from(Array(4).keys()).map((item, index) => (
                   <span className='bar' key={index} />
                 ))}
@@ -154,7 +164,7 @@ const TrackTableCell = ({
         onClick={() => {
           setCurrentSong(track, true);
           setCurrentList(list);
-          localStorage.setItem('current-song', JSON.stringify(track));
+          setTrackToLocalStorage(track);
         }}
       >
         <MdPlayArrow className='h-4 w-4 text-white' />
@@ -164,37 +174,3 @@ const TrackTableCell = ({
 
   return null;
 };
-
-export function AnimatedGradient() {
-  const interval = useMotionValue(0);
-  const y = useTransform(interval, (value) => Math.sin(value) * 100);
-  const x = useTransform(interval, (value) => Math.cos(value) * 100);
-
-  useEffect(() => {
-    const controls = animate(interval, [0, Math.PI * 2], {
-      repeat: Infinity,
-      duration: 1500,
-      ease: 'circIn',
-    });
-
-    return controls.stop;
-  }, [interval]);
-
-  return (
-    <div className='absolute inset-0 z-[-1] overflow-hidden shadow-lg shadow-zinc-500 sm:rounded-xl'>
-      <motion.div
-        style={{
-          x,
-          y,
-          scale: 5,
-          backgroundColor: '#322840',
-          backgroundImage: `
-            radial-gradient(at 21% 33%, #1f2460 0px, transparent 50%),
-            radial-gradient(at 79% 32%, #2d1e51 0px, transparent 50%),
-            radial-gradient(at 26% 83%, #0f2451 0px, transparent 50%)`,
-        }}
-        className='absolute inset-0'
-      ></motion.div>
-    </div>
-  );
-}

@@ -17,6 +17,7 @@ export const Playerbar = () => {
     <>
       {currentSong && (
         <ReactHowler
+          //format={['mp3']}
           src={currentSong.src}
           playing={isPlaying}
           ref={soundRef}
@@ -24,7 +25,7 @@ export const Playerbar = () => {
           mute={isMute}
           volume={volume[0]}
           onEnd={onEnd}
-          preload
+          preload={false}
         />
       )}
       {currentScreen === 'main' ? (

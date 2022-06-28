@@ -1,12 +1,30 @@
 import { motion } from 'framer-motion';
+import { BiLoaderAlt } from 'react-icons/bi';
 import { MdPause, MdPlayArrow } from 'react-icons/md';
 
-import { useSongStore } from '@/store/song';
+import { HOWLER_STATE, useSongStore } from '@/store/song';
+
 export const PlayPauseButton = () => {
-  const { isPlaying, togglePlay } = useSongStore();
+  const { isPlaying, togglePlay, isLoaded } = useSongStore();
+
   return (
     <>
-      {!isPlaying ? (
+      {isLoaded !== HOWLER_STATE.LOADED && !isPlaying ? (
+        <motion.button
+          whileTap={{ scale: 1.1 }}
+          onClick={togglePlay}
+          className='rounded-full bg-gradient-to-tr from-teal-400 to-purple-300 p-2'
+        >
+          <MdPlayArrow className='h-8 w-8 text-primary-light' />
+        </motion.button>
+      ) : isLoaded !== HOWLER_STATE.LOADED ? (
+        <button
+          disabled
+          className='rounded-full bg-gradient-to-tr from-teal-400 to-purple-300 p-2 disabled:bg-opacity-50'
+        >
+          <BiLoaderAlt className='h-8 w-8 animate-spin p-1 text-primary-light/70 duration-500' />
+        </button>
+      ) : !isPlaying ? (
         <motion.button
           whileTap={{ scale: 1.1 }}
           onClick={togglePlay}

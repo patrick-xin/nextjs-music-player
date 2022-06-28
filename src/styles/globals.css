@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply overflow-hidden bg-black/90 font-body text-white/80;
+    @apply relative overflow-hidden bg-black/90 font-body text-white/80;
   }
 }
 

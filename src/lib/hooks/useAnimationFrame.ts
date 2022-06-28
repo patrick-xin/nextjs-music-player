@@ -5,7 +5,7 @@ export const useAnimationFrame = ({
   duration = Number.POSITIVE_INFINITY,
   shouldAnimate = true,
 }: {
-  nextAnimationFrameHandler: (timeFraction: number) => void;
+  nextAnimationFrameHandler: (_timeFraction: number) => void;
   duration?: number;
   shouldAnimate: boolean;
 }) => {

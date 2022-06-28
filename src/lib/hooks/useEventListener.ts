@@ -3,16 +3,16 @@ import { RefObject, useEffect, useRef } from 'react';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 function useEventListener<K extends keyof WindowEventMap>(
-  eventName: K,
-  handler: (event: WindowEventMap[K]) => void
+  _eventName: K,
+  _handler: (_event: WindowEventMap[K]) => void
 ): void;
 function useEventListener<
   K extends keyof HTMLElementEventMap,
   T extends HTMLElement = HTMLDivElement
 >(
-  eventName: K,
-  handler: (event: HTMLElementEventMap[K]) => void,
-  element: RefObject<T>
+  _eventName: K,
+  _handler: (_event: HTMLElementEventMap[K]) => void,
+  _element: RefObject<T>
 ): void;
 
 function useEventListener<
@@ -22,7 +22,7 @@ function useEventListener<
 >(
   eventName: KW | KH,
   handler: (
-    event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event
+    _event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event
   ) => void,
   element?: RefObject<T>
 ) {

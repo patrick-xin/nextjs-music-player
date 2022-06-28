@@ -7,8 +7,8 @@ import { siteInfo } from '@/lib/site.info';
 const defaultMeta = {
   title: siteInfo.title,
   siteName: siteInfo.title,
-  description: 'Music player built with Next.js, Tailwind CSS.',
-  url: 'https://nextjs-music-player-delta.vercel.app',
+  description: 'Music player built with Next.JS, Tailwind CSS.',
+  url: 'https://px-groove.vercel.app',
   type: 'website',
   robots: 'follow, index',
   image: '',

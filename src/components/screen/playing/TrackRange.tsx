@@ -5,7 +5,7 @@ import { RangeThumb, RangeTrack } from '@/components/common';
 type TrackRangeProps = {
   duration: number;
   values: number[];
-  onChange: (values: number[]) => void;
+  onChange: (_values: number[]) => void;
 };
 
 export const TrackRange = ({ duration, values, onChange }: TrackRangeProps) => {

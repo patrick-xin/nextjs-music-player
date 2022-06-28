@@ -6,16 +6,20 @@ import { TrackDetail } from '@/components/screen/playing/TrackDetail';
 
 import { useSongStore } from '@/store/song';
 
+import { setTrackToLocalStorage } from '@/utils';
+
 export const PlayingScreen = () => {
   const { currentList, currentSong, isPlaying, playNextSong, playPrevSong } =
     useSongStore();
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
-      playNextSong(currentList);
+      playNextSong();
+      if (currentSong) setTrackToLocalStorage(currentSong);
     },
     onSwipedRight: () => {
-      playPrevSong(currentList);
+      playPrevSong();
+      if (currentSong) setTrackToLocalStorage(currentSong);
     },
   });
   return (

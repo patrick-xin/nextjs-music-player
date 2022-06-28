@@ -2,20 +2,34 @@ import { useAnimationFrame } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import ReactHowler from 'react-howler';
 
-import { useSongStore } from '@/store/song';
+import { HOWLER_STATE, useSongStore } from '@/store/song';
 
 export const useHolwer = () => {
-  const { isRepeating, playNextSong, currentList, volume, handleVolumeRange } =
-    useSongStore();
+  const {
+    isRepeating,
+    playNextSong,
+    volume,
+    handleVolumeRange,
+    setLoaded,
+    currentSong,
+  } = useSongStore();
 
   const [seek, setSeek] = useState([0]);
   const [duration, setDuration] = useState(0);
+
   const repeatRef = useRef(isRepeating);
 
   const soundRef = useRef<ReactHowler | null>(null);
+  const loading = soundRef.current?.howlerState() as HOWLER_STATE;
+  useEffect(() => {
+    if (!soundRef.current) return;
+
+    setLoaded(loading);
+  }, [soundRef, currentSong, setLoaded, loading]);
   useEffect(() => {
     repeatRef.current = isRepeating;
   }, [isRepeating]);
+
   const onLoad = () => {
     if (!soundRef.current) return;
 
@@ -30,7 +44,7 @@ export const useHolwer = () => {
 
       soundRef.current.seek(0);
     } else {
-      playNextSong(currentList);
+      playNextSong();
     }
   };
   const handleTrackRange = (values: number[]) => {
