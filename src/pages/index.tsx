@@ -35,7 +35,7 @@ export default function HomePage({ lists, page }: Props) {
   }, [setCurrentSong, setCurrentList, lists]);
 
   return (
-    <>
+    <div className='overflow-y-auto'>
       <Seo />
 
       {currentScreen === 'playing' ? (
@@ -49,7 +49,7 @@ export default function HomePage({ lists, page }: Props) {
         isModalOpen={isModalOpen}
         closeModal={() => setModalOpen(false)}
       />
-    </>
+    </div>
   );
 }
 

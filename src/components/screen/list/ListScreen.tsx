@@ -24,9 +24,9 @@ export const ListScreen = ({ lists, toggleModal }: Props) => {
       </h1>
       <h3
         onClick={toggleModal}
-        className='text-center underline underline-offset-2'
+        className='cursor-pointer text-center underline underline-offset-2'
       >
-        <a className='text-purple-200/40'>About</a>
+        About
       </h3>
 
       <ListRow lists={lists} />

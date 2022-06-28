@@ -23,6 +23,7 @@
     "@apollo/client": "^3.6.9",
     "@fontsource/poppins": "^4.5.8",
     "@graphcms/rich-text-react-renderer": "^0.5.0",
+    "@headlessui/react": "^1.6.5",
     "clsx": "^1.1.1",
     "framer-motion": "^6.3.3",
     "graphql": "^16.5.0",
