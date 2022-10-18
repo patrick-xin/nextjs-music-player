@@ -108,7 +108,7 @@ const TableRow = ({ track, index, list }: TableRowProps) => {
           <div className='flex items-center'>
             <div className='space-y-1'>
               <div className='text-white'>{name}</div>
-              <div className='text-xs'>artist</div>
+              <div className='text-xs'>{track.artist.split('_').join(' ')}</div>
             </div>
 
             <div className='relative ml-4 h-4 w-4'>

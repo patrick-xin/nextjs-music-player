@@ -1,3 +1,4 @@
+import cn from 'clsx';
 import React, { useEffect } from 'react';
 import { AiFillBackward, AiOutlineForward } from 'react-icons/ai';
 import { MdRepeat, MdShuffle } from 'react-icons/md';
@@ -15,12 +16,14 @@ type PlayingScreenPlayerControlProps = {
   duration: number;
   onTrackRangeChange: (_values: number[]) => void;
   values: number[];
+  size?: 'sm' | 'normal';
 };
 
 export const PlayingPlayer = ({
   duration,
   onTrackRangeChange,
   values,
+  size = 'normal',
 }: PlayingScreenPlayerControlProps) => {
   const {
     playNextSong,
@@ -53,8 +56,15 @@ export const PlayingPlayer = ({
     if (currentSong) setTrackToLocalStorage(currentSong);
   }, [currentSong]);
   return (
-    <div className='fixed bottom-0 flex h-40 w-full flex-col py-4'>
-      <div className='z-50 flex h-full items-center justify-center gap-8'>
+    <div
+      className={cn(
+        'fixed -bottom-14 z-100 flex w-full flex-col space-y-3 py-4',
+        {
+          'h-40': size === 'normal',
+        }
+      )}
+    >
+      <div className='z-50 flex items-center justify-center gap-8'>
         <button onClick={handleRepeat}>
           <MdRepeat
             className={`${
@@ -64,12 +74,12 @@ export const PlayingPlayer = ({
         </button>
 
         <button onClick={handlePlayPrev}>
-          <AiFillBackward className='h-7 w-7 ' />
+          <AiFillBackward className='h-7 w-7' />
         </button>
         <PlayPauseButton />
 
         <button onClick={handlePlayNext}>
-          <AiOutlineForward className='h-7 w-7 ' />
+          <AiOutlineForward className='h-7 w-7' />
         </button>
 
         <button onClick={handleShuffle}>
@@ -79,7 +89,7 @@ export const PlayingPlayer = ({
         </button>
       </div>
       {isLoaded !== HOWLER_STATE.LOADED ? (
-        <div className='h-12' />
+        <div className='h-6' />
       ) : (
         <div className='mx-auto w-56 space-y-2 lg:w-1/3'>
           <div className='mx-auto w-full'>

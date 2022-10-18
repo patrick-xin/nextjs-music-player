@@ -17,11 +17,18 @@ module.exports = {
     extend: {
       fontFamily: {
         body: ['"Poppins", "sans-serif"'],
+        display: ['"Anton", "sans-serif"'],
       },
       colors: {
         primary: '#23204C',
         'primary-light': '#3E3874',
         'primary-dark': '#0D0A2A',
+      },
+      animation: {
+        'spin-slow': 'spin 5s linear infinite',
+      },
+      zIndex: {
+        100: '100',
       },
     },
   },

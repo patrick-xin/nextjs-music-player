@@ -1,6 +1,7 @@
 import { ApolloProvider } from '@apollo/client';
 import { AppProps } from 'next/app';
 import '@fontsource/poppins';
+import '@fontsource/anton';
 
 import '@/styles/globals.css';
 

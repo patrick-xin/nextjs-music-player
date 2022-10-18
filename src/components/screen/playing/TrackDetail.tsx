@@ -58,7 +58,9 @@ export const TrackDetail = ({
 
           <div className='flex flex-col items-center justify-center gap-2'>
             <h4 className='text-2xl'>{track.name}</h4>
-            <h3 className='text-gray-400'>artist</h3>
+            <h3 className='text-gray-400'>
+              {track.artist.split('_').join(' ')}
+            </h3>
           </div>
         </motion.div>
       )}

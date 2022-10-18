@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: #e3dcd6;
+    --progress: 20; /*percent of progress*/
+    --progress-right: calc((130px * var(--progress)) / 100);
+    --progress-left: calc(130px - var(--progress-right));
+    --speed-spool: 5s;
+  }
   body {
     @apply relative overflow-hidden bg-black/90 font-body text-white/80;
   }
@@ -14,6 +21,13 @@
     background-image: radial-gradient(at 21% 33%, #211a37 0px, transparent 50%),
       radial-gradient(at 79% 32%, #252844 0px, transparent 50%),
       radial-gradient(at 26% 83%, #1c2e54 0px, transparent 50%);
+  }
+  .glow {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(12, 31, 49, 0),
+      #211a37 50px
+    );
   }
   .bar {
     @apply absolute bottom-[1px] h-[3px] w-[3px] bg-green-500;
@@ -55,5 +69,290 @@
   .bar:nth-child(5) {
     left: 17px;
     animation-duration: 400ms;
+  }
+}
+
+.tape {
+  @apply mesh relative mx-auto my-0 h-full w-full px-6 py-4;
+}
+
+.tape-screw-overflow {
+  width: 100%;
+  height: 100%;
+  background-color: #1d1b1e;
+}
+.tape-screw-overflow > div:before,
+.tape-screw-overflow > div:after {
+  content: '';
+  position: absolute;
+  width: 0.625em;
+  height: 0.625em;
+  background-color: #c3c3c5;
+  border-radius: 0.188em;
+}
+
+.tape-screw-overflow > div:nth-child(1):before {
+  right: calc(50% + 0.063em);
+  bottom: calc(50% + 0.063em);
+}
+
+.tape-screw-overflow > div:nth-child(1):after {
+  left: calc(50% + 0.063em);
+  bottom: calc(50% + 0.063em);
+}
+
+.tape-screw-overflow > div:nth-child(2):before {
+  right: calc(50% + 0.063em);
+  top: calc(50% + 0.063em);
+}
+
+.tape-screw-overflow > div:nth-child(2):after {
+  left: calc(50% + 0.063em);
+  top: calc(50% + 0.063em);
+}
+
+.tape-header {
+  position: relative;
+  height: 72px;
+  padding-left: 6px;
+  padding-top: 12px;
+  overflow: hidden;
+  background-color: red;
+  border-radius: 10px 10px 0 0;
+  background-color: #f36869;
+}
+
+.tape-body {
+  height: 120px;
+  padding-top: 5px;
+  background: linear-gradient(
+    to bottom,
+    #e97f2f 40px,
+    #e97f2f 10%,
+    #f4bd58 40px,
+    #f4bd58 70%,
+    #f2ead7 80px,
+    #f2ead7 60%
+  );
+}
+
+.tape-window {
+  @apply p-4;
+  width: 290px;
+  height: 80px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+  position: relative;
+}
+
+.tape-window:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0px 0px 0px 10px #231f20;
+}
+
+.tape-spools {
+  background-color: var(--background);
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  overflow: hidden;
+}
+
+.tape-spool {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+.tape-spoolbar {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  margin-top: 1px;
+  width: 58px;
+  height: 58px;
+  border: 5px solid #1d2225;
+  border-radius: 50px;
+  background-color: #1d2225;
+}
+
+.tape-spoolbar:before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  bottom: 5px;
+  right: 5px;
+  z-index: 1;
+  border-radius: inherit;
+  background-color: #1d2225;
+}
+
+.tape-spoolbar > div {
+  position: absolute;
+  width: 6px;
+  top: -2px;
+  bottom: -2px;
+  background-color: #a2a3a7;
+}
+
+.tape-spoolbar > div:nth-child(2) {
+  transform: rotate(120deg);
+}
+
+.tape-spoolbar > div:nth-child(3) {
+  transform: rotate(240deg);
+}
+
+.tape-film-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tape-film {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 90px;
+  min-height: 90px;
+  border-radius: 50%;
+  border: 1px solid #0f0f0f;
+  background: #0f0f0f
+    repeating-radial-gradient(#261311, #261311 1px, #261311 2px, #261311 3px);
+  animation: tape-spol-rotate 7s linear infinite;
+}
+
+.tape-film:before {
+  content: '';
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: #0f0f0f;
+}
+
+.tape-spool:nth-child(1) .tape-film {
+  width: calc(90px + var(--progress-left));
+  height: calc(90px + var(--progress-left));
+}
+
+.tape-spool:nth-child(2) .tape-film {
+  width: calc(90px + var(--progress-right));
+  height: calc(90px + var(--progress-right));
+}
+
+.tape-footer {
+  @apply mx-auto mt-3;
+  position: relative;
+  width: 320px;
+  height: 67px;
+
+  border-top: 3px solid #828186;
+}
+
+.tape-footer:before {
+  content: '';
+  position: absolute;
+  width: 3px;
+  top: -2px;
+  bottom: -30px;
+  right: 0;
+  transform: rotate(-20deg);
+  transform-origin: 0 0;
+  background-color: #828186;
+}
+
+.tape-footer:after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -1px;
+  bottom: -30px;
+  width: 2px;
+  transform: rotate(20deg);
+  transform-origin: 0 0;
+  background-color: #828186;
+}
+
+.tape-hole:before,
+.tape-hole:after {
+  content: '';
+  position: absolute;
+  background-color: var(--background);
+  z-index: 3;
+}
+
+.tape-hole-radial:before,
+.tape-hole-radial:after {
+  width: 18px;
+  height: 18px;
+  bottom: 5px;
+  border-radius: 50%;
+}
+
+.tape-hole-radial:before {
+  left: 30px;
+}
+.tape-hole-radial:after {
+  right: 30px;
+}
+
+.tape-hole-square:before,
+.tape-hole-square:after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  bottom: 10px;
+  border-radius: 5px;
+  z-index: 3;
+  background-color: var(--background);
+}
+
+.tape-hole-square:before {
+  left: 84px;
+}
+
+.tape-hole-square:after {
+  right: 84px;
+}
+
+.tape-footer .tape-screw {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: auto;
+  margin: 0 auto;
+  bottom: 30px;
+  font-size: 22px;
+  transform: rotate(60deg);
+}
+
+.tape:hover .progress-range {
+  opacity: 1;
+}
+
+@keyframes tape-spol-rotate {
+  from {
+    transform: rotate(360deg);
   }
 }

@@ -71,6 +71,7 @@ export async function getStaticProps() {
             duration
             genre
             src
+            artist
             coverImage {
               source {
                 url

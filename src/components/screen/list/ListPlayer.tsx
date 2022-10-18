@@ -2,7 +2,6 @@ import Image from 'next/image';
 import React, { useEffect } from 'react';
 
 import { PlayPauseButton } from '@/components/common';
-import AnimatedGradient from '@/components/common/AnimatedGradient';
 
 import { HOWLER_STATE, useSongStore } from '@/store/song';
 
@@ -13,9 +12,9 @@ export const ListPlayer = () => {
   useEffect(() => {
     if (currentSong) setTrackToLocalStorage(currentSong);
   }, [currentSong]);
+
   return (
-    <div className='mesh fixed bottom-0 right-0 left-0 z-50 mx-auto max-w-full gap-4 rounded-md lg:px-12'>
-      <AnimatedGradient />
+    <div className='glow fixed bottom-0 right-0 left-0 mx-auto max-w-full gap-4 rounded-md lg:px-12'>
       {currentSong ? (
         <div className='flex items-center justify-between p-4'>
           <div
@@ -35,7 +34,9 @@ export const ListPlayer = () => {
             />
             <div>
               <div className='text-sm'>{currentSong.name}</div>
-              <div className='text-xs text-gray-400'>artist</div>
+              <div className='text-xs text-gray-400'>
+                {currentSong.artist.split('_').join(' ')}
+              </div>
             </div>
           </div>
           <div>

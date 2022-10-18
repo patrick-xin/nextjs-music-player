@@ -15,14 +15,14 @@ export const PlayPauseButton = () => {
           onClick={togglePlay}
           className='rounded-full bg-gradient-to-tr from-teal-400 to-purple-300 p-2'
         >
-          <MdPlayArrow className='h-8 w-8 text-primary-light' />
+          <MdPlayArrow className='h-6 w-6 text-primary-light' />
         </motion.button>
       ) : isLoaded !== HOWLER_STATE.LOADED ? (
         <button
           disabled
           className='rounded-full bg-gradient-to-tr from-teal-400 to-purple-300 p-2 disabled:bg-opacity-50'
         >
-          <BiLoaderAlt className='h-8 w-8 animate-spin p-1 text-primary-light/70 duration-500' />
+          <BiLoaderAlt className='h-6 w-6 animate-spin p-1 text-primary-light/70 duration-500' />
         </button>
       ) : !isPlaying ? (
         <motion.button
@@ -30,7 +30,7 @@ export const PlayPauseButton = () => {
           onClick={togglePlay}
           className='rounded-full bg-gradient-to-tr from-teal-400 to-purple-300 p-2'
         >
-          <MdPlayArrow className='h-8 w-8 text-primary-light' />
+          <MdPlayArrow className='h-6 w-6 text-primary-light' />
         </motion.button>
       ) : (
         <motion.button
@@ -38,7 +38,7 @@ export const PlayPauseButton = () => {
           whileTap={{ scale: 1.1 }}
           className='rounded-full bg-gradient-to-tr from-teal-700 via-indigo-400 to-purple-400 p-2'
         >
-          <MdPause className='h-8 w-8 text-primary-light' />
+          <MdPause className='h-6 w-6 text-primary-light' />
         </motion.button>
       )}
     </>
