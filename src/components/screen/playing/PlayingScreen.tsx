@@ -26,10 +26,10 @@ export const PlayingScreen = () => {
   });
   // Detect if device is portrait, if so display cassette
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
-
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   return (
     <div className='absolute inset-0 h-full w-full'>
-      {!isPortrait ? (
+      {!isPortrait && isMobile ? (
         <div className='h-full'>
           <Cassette />
         </div>
