@@ -8,5 +8,9 @@ export const formatTime = (timeInSeconds = 0) => {
 
 export const setTrackToLocalStorage = (track: Track) => {
   if (!localStorage) return;
-  localStorage.setItem('current-song', JSON.stringify(track));
+  if (localStorage.getItem('current-song')) {
+    localStorage.removeItem('current-song');
+  } else {
+    localStorage.setItem('current-song', JSON.stringify(track));
+  }
 };
